@@ -1,6 +1,7 @@
 package gui;
 
 import engine.Game;
+import engine.Position;
 
 /**
  *
@@ -8,16 +9,18 @@ import engine.Game;
 final class Main {
 
     public static void main(String[] args) {
-        boolean[][] stateOfGame = {
-                { false, false, false },
-                { false, true, false },
-                { false, false, false }
-        };
+//        boolean[][] stateOfGame = {
+//                { false, false, false },
+//                { false, true, false },
+//                { false, false, false }
+//        };
 
-        Game game = new Game(3);
-        game.updateMatrix(stateOfGame);
+        Game game = new Game(5);
+        //game.updateMatrix(stateOfGame);
 
-        Gui gui = new Gui('*', 'o', 3);
+        Gui gui = new Gui('*', 'o', 5);
         gui.printStateOfGame(game.getGameMatrix());
+
+        Position pos = game.calculatePosition();
     }
 }
