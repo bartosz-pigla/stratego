@@ -1,9 +1,12 @@
-package engine;
+package api;
 
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import selector.HeuristicSelector;
+import selector.PositionSelector;
+import selector.RandomSelector;
 
 public class GameTest {
 
@@ -20,7 +23,10 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        Position pos = game.calculatePosition();
+        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        PositionSelector selector = new HeuristicSelector(randomSelector, game);
+
+        Position pos = selector.nextPosition();
         assertEquals(pos, new Position(2, 4, false, game));
     }
 
@@ -37,7 +43,10 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        Position pos = game.calculatePosition();
+        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        PositionSelector selector = new HeuristicSelector(randomSelector, game);
+
+        Position pos = selector.nextPosition();
         assertEquals(pos, new Position(2, 2, false, game));
     }
 
@@ -54,7 +63,10 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        Position pos = game.calculatePosition();
+        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        PositionSelector selector = new HeuristicSelector(randomSelector, game);
+
+        Position pos = selector.nextPosition();
         assertEquals(pos, new Position(2, 2, false, game));
     }
 }

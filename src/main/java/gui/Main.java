@@ -1,26 +1,31 @@
 package gui;
 
-import engine.Game;
-import engine.Position;
+import algorithm.Algorithm;
+import algorithm.AlphaBeta;
+import api.Game;
+import api.Player;
+import score.ScoreCalculator;
+import score.SimpleScoreCalculator;
+import selector.PositionSelector;
+import selector.RandomSelector;
 
-/**
- *
- */
 final class Main {
 
     public static void main(String[] args) {
-//        boolean[][] stateOfGame = {
-//                { false, false, false },
-//                { false, true, false },
-//                { false, false, false }
-//        };
+        run(5);
+    }
 
-        Game game = new Game(5);
-        //game.updateMatrix(stateOfGame);
+    private static void run(int problemSize) {
+        Gui gui = new Gui('x','o',problemSize);
+        Game game = new Game(problemSize);
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        PositionSelector selector = new RandomSelector(game.getEmptyPositions());
 
-        Gui gui = new Gui('*', 'o', 5);
-        gui.printStateOfGame(game.getGameMatrix());
+        int level = 4;
+        Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator);
+        Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator);
+        Player playerOne = new Player(playerOneAlgorithm);
+        Player playerTwo = new Player(playerTwoAlgorithm);
 
-        Position pos = game.calculatePosition();
     }
 }

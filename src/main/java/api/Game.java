@@ -1,4 +1,4 @@
-package engine;
+package api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,10 +145,6 @@ public final class Game {
         return null;
     }
 
-    public Position randomPosition() {
-        return emptyPositions.get(random.nextInt(emptyPositions.size()));
-    }
-
     public Position getPosition(int posX, int posY) {
         return gameMatrix[posX][posY];
     }
@@ -167,47 +163,5 @@ public final class Game {
                 fillPosition(i, j, matrix[i][j]);
             }
         }
-    }
-
-    public Position calculatePosition() {
-        Position positionFromRow;
-        for (int row = 0; row < problemSize; row++) {
-            if ((positionFromRow = calculatePositionHelper(gameMatrix[row])) != null) {
-                return positionFromRow;
-            }
-        }
-
-        Position positionFromColumn;
-        for (int column = 0; column < problemSize; column++) {
-            if ((positionFromColumn = calculatePositionHelper(columns[column])) != null) {
-                return positionFromColumn;
-            }
-        }
-
-        Position positionFromDiagonal;
-        for (int i = problemSize - 1; i >= 0; i--) {
-            if ((positionFromDiagonal = calculatePositionHelper(leftDiagonals[i])) != null) {
-                return positionFromDiagonal;
-            } else if ((positionFromDiagonal = calculatePositionHelper(rightDiagonals[i])) != null) {
-                return positionFromDiagonal;
-            }
-        }
-        return randomPosition();
-    }
-
-
-    private Position calculatePositionHelper(Position[] line) {
-        int posX = -1, posY = -1, emptyCount = 0;
-        for (int i = 0; i < line.length; i++) {
-            if (!line[i].isFilled()) {
-                if (emptyCount == 1) {
-                    return null;
-                }
-                emptyCount++;
-                posX = line[i].getPosX();
-                posY = line[i].getPosY();
-            }
-        }
-        return getPosition(posX, posY);
     }
 }

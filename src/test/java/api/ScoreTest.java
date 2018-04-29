@@ -1,8 +1,10 @@
-package engine;
+package api;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import score.ScoreCalculator;
+import score.SimpleScoreCalculator;
 
 public class ScoreTest {
 
@@ -19,7 +21,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(2, 0);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 8);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 8);
     }
 
     @Test
@@ -35,7 +41,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(3, 0);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 12);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 12);
     }
 
     @Test
@@ -51,7 +61,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(0, 3);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 12);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 12);
     }
 
     @Test
@@ -68,7 +82,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(2, 2);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 20);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 20);
     }
 
     @Test
@@ -84,7 +102,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 0);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 0);
     }
 
     @Test
@@ -100,7 +122,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 0);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 0);
     }
 
     @Test
@@ -116,7 +142,11 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(1, 1);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 0);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 0);
     }
 
     @Test
@@ -132,6 +162,10 @@ public class ScoreTest {
         game.updateMatrix(matrix);
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
-        assertEquals(position.calculateScore(), 0);
+
+        ScoreCalculator calculator = new SimpleScoreCalculator();
+        calculator.calculate(position);
+
+        assertEquals(position.getScore(), 0);
     }
 }

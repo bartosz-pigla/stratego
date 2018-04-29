@@ -1,6 +1,6 @@
 package gui;
 
-import engine.Position;
+import api.Position;
 import lombok.Value;
 
 @Value

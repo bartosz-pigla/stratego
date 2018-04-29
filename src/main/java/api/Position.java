@@ -1,4 +1,4 @@
-package engine;
+package api;
 
 import java.util.Objects;
 
@@ -18,6 +18,9 @@ public final class Position {
     @Setter
     private Position[][] lines;
 
+    @Setter
+    private int score;
+
     public Position(int posX, int posY, boolean filled, Game game) {
         this.posX = posX;
         this.posY = posY;
@@ -33,20 +36,6 @@ public final class Position {
     public void blankAndAddToEmpties() {
         filled = false;
         game.getEmptyPositions().add(this);
-    }
-
-    public int calculateScore() {
-        int score = 0;
-        for (int i = 0; i < lines.length; i++) {
-            score += lines[i].length;
-            for (int j = 0; j < lines[i].length; j++) {
-                if (!lines[i][j].isFilled()) {
-                    score -= lines[i].length;
-                    break;
-                }
-            }
-        }
-        return score;
     }
 
     @Override
