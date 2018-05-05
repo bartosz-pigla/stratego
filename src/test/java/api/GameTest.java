@@ -23,7 +23,7 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        RandomSelector randomSelector = new RandomSelector(game);
         PositionSelector selector = new HeuristicSelector(randomSelector, game);
 
         Position pos = selector.nextPosition();
@@ -43,7 +43,7 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        RandomSelector randomSelector = new RandomSelector(game);
         PositionSelector selector = new HeuristicSelector(randomSelector, game);
 
         Position pos = selector.nextPosition();
@@ -63,7 +63,7 @@ public class GameTest {
 
         game.updateMatrix(matrix);
 
-        RandomSelector randomSelector = new RandomSelector(game.getEmptyPositions());
+        RandomSelector randomSelector = new RandomSelector(game);
         PositionSelector selector = new HeuristicSelector(randomSelector, game);
 
         Position pos = selector.nextPosition();

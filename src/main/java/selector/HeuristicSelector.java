@@ -42,6 +42,11 @@ public final class HeuristicSelector implements PositionSelector {
         return game.getEmptyPositions().size() > 0;
     }
 
+    @Override
+    public void init() {
+
+    }
+
     private Position calculatePositionHelper(Position[] line) {
         int posX = -1, posY = -1, emptyCount = 0;
         for (int i = 0; i < line.length; i++) {

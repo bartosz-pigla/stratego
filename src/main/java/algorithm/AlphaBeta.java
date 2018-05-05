@@ -1,5 +1,6 @@
 package algorithm;
 
+import api.Game;
 import api.Player;
 import api.Position;
 import lombok.AllArgsConstructor;
@@ -12,41 +13,64 @@ public final class AlphaBeta implements Algorithm {
     private int depth;
     private PositionSelector selector;
     private ScoreCalculator calculator;
+    private Game game;
 
     @Override
-    public void play(Player player) {
-        alphaBeta(null, depth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public int play(Player player) {
+        Position position = alphaBeta(null, depth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return position.getScore();
     }
 
     private Position alphaBeta(Position position, int depth, boolean maximizingPlayer, int alpha, int beta) {
-        if (!selector.hasNext() || depth == 0) {
+        if (game.getEmptyPositions().size() == 0 || depth == 0) {
             calculator.calculate(position);
             return position;
         } else if (maximizingPlayer) {
-            return doForMaximizingPlayer(alpha, beta);
+            return doForMaximizingPlayer(depth, alpha, beta);
         } else {
-            return doForMinimizingPlayer(alpha, beta);
+            return doForMinimizingPlayer(depth, alpha, beta);
         }
     }
 
-    private Position doForMaximizingPlayer(int alpha, int beta) {
+    private Position doForMaximizingPlayer(int depth, int alpha, int beta) {
         int bestScore = Integer.MIN_VALUE;
         Position currentPosition, bestPosition = null;
-        while (selector.hasNext()) {
-            currentPosition = alphaBeta(selector.nextPosition(), depth - 1, false, alpha, beta);
+        for (int i = 0; i < game.getEmptyPositions().size(); i++) {
+            currentPosition = game.getEmptyPositions().get(i);
+            game.getEmptyPositions().remove(i);
+            alphaBeta(currentPosition, depth - 1, false, alpha, beta);
+            game.getEmptyPositions().set(i, currentPosition);
             if (currentPosition.getScore() > bestScore) {
-                bestScore = currentPosition.getScore();
                 bestPosition = currentPosition;
-            }
-            alpha = Math.max(alpha, bestScore);
-            if (alpha >= beta) {
-                break;
+                bestScore = currentPosition.getScore();
+                alpha = Math.max(alpha, bestScore);
+                if (alpha >= beta) {
+                    break;
+                }
             }
         }
+        game.getEmptyPositions().remove(bestPosition);
         return bestPosition;
     }
 
-    private Position doForMinimizingPlayer(int alpha, int beta) {
-        return null;
+    private Position doForMinimizingPlayer(int depth, int alpha, int beta) {
+        int worstScore = Integer.MAX_VALUE;
+        Position currentPosition, worstPosition = null;
+        for (int i = 0; i < game.getEmptyPositions().size(); i++) {
+            currentPosition = game.getEmptyPositions().get(i);
+            game.getEmptyPositions().remove(i);
+            alphaBeta(currentPosition, depth - 1, true, alpha, beta);
+            game.getEmptyPositions().set(i, currentPosition);
+            if (currentPosition.getScore() < worstScore) {
+                worstPosition = currentPosition;
+                worstScore = currentPosition.getScore();
+                alpha = Math.min(alpha, worstScore);
+                if (alpha >= beta) {
+                    break;
+                }
+            }
+        }
+        game.getEmptyPositions().remove(worstPosition);
+        return worstPosition;
     }
 }

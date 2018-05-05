@@ -153,7 +153,7 @@ public final class Game {
         if (filled) {
             gameMatrix[posX][posY].fillAndRemoveFromEmpties();
         } else {
-            gameMatrix[posX][posY].blankAndAddToEmpties();
+            gameMatrix[posX][posY].emptyAndAddToEmpties();
         }
     }
 

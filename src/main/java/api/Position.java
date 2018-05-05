@@ -33,7 +33,7 @@ public final class Position {
         game.getEmptyPositions().remove(this);
     }
 
-    public void blankAndAddToEmpties() {
+    public void emptyAndAddToEmpties() {
         filled = false;
         game.getEmptyPositions().add(this);
     }
