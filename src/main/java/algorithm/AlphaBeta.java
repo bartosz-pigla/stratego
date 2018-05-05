@@ -1,5 +1,8 @@
 package algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import api.Game;
 import api.Player;
 import api.Position;
@@ -18,12 +21,15 @@ public final class AlphaBeta implements Algorithm {
     @Override
     public int play(Player player) {
         Position position = alphaBeta(null, depth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        game.fillPosition(position.getPosX(), position.getPosY(), true);
         return position.getScore();
     }
 
     private Position alphaBeta(Position position, int depth, boolean maximizingPlayer, int alpha, int beta) {
         if (game.getEmptyPositions().size() == 0 || depth == 0) {
+            game.fillPosition(position.getPosX(), position.getPosY(), true);
             calculator.calculate(position);
+            game.fillPosition(position.getPosX(), position.getPosY(), false);
             return position;
         } else if (maximizingPlayer) {
             return doForMaximizingPlayer(depth, alpha, beta);
@@ -34,12 +40,13 @@ public final class AlphaBeta implements Algorithm {
 
     private Position doForMaximizingPlayer(int depth, int alpha, int beta) {
         int bestScore = Integer.MIN_VALUE;
-        Position currentPosition, bestPosition = null;
-        for (int i = 0; i < game.getEmptyPositions().size(); i++) {
-            currentPosition = game.getEmptyPositions().get(i);
-            game.getEmptyPositions().remove(i);
+        Position bestPosition = null;
+        List<Position> positionsToVisit = new ArrayList<>(game.getEmptyPositions());
+
+        for (Position currentPosition : positionsToVisit) {
+            game.getEmptyPositions().remove(currentPosition);
             alphaBeta(currentPosition, depth - 1, false, alpha, beta);
-            game.getEmptyPositions().set(i, currentPosition);
+            game.getEmptyPositions().add(currentPosition);
             if (currentPosition.getScore() > bestScore) {
                 bestPosition = currentPosition;
                 bestScore = currentPosition.getScore();
@@ -49,18 +56,20 @@ public final class AlphaBeta implements Algorithm {
                 }
             }
         }
-        game.getEmptyPositions().remove(bestPosition);
+
+        //game.getEmptyPositions().remove(bestPosition);
         return bestPosition;
     }
 
     private Position doForMinimizingPlayer(int depth, int alpha, int beta) {
         int worstScore = Integer.MAX_VALUE;
-        Position currentPosition, worstPosition = null;
-        for (int i = 0; i < game.getEmptyPositions().size(); i++) {
-            currentPosition = game.getEmptyPositions().get(i);
-            game.getEmptyPositions().remove(i);
+        Position worstPosition = null;
+        List<Position> positionsToVisit = new ArrayList<>(game.getEmptyPositions());
+
+        for (Position currentPosition : positionsToVisit) {
+            game.getEmptyPositions().remove(currentPosition);
             alphaBeta(currentPosition, depth - 1, true, alpha, beta);
-            game.getEmptyPositions().set(i, currentPosition);
+            game.getEmptyPositions().add(currentPosition);
             if (currentPosition.getScore() < worstScore) {
                 worstPosition = currentPosition;
                 worstScore = currentPosition.getScore();
@@ -70,7 +79,8 @@ public final class AlphaBeta implements Algorithm {
                 }
             }
         }
-        game.getEmptyPositions().remove(worstPosition);
+
+        //game.getEmptyPositions().remove(worstPosition);
         return worstPosition;
     }
 }

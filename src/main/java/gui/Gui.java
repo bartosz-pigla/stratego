@@ -50,14 +50,20 @@ public final class Gui {
         int row = getNumber(game);
         System.out.println("Nr. kolumny: ");
         int column = getNumber(game);
-        return game.getPosition(row, column);
+        Position position = game.getPosition(row, column);
+        if (game.getEmptyPositions().contains(position)) {
+            return position;
+        } else {
+            System.out.println("Ta pozycja już jest zajęta");
+            return getPosition(game, player);
+        }
     }
 
     private int getNumber(Game game) {
         Scanner sc = new Scanner(System.in);
         try {
             int number = sc.nextInt();
-            if (number < 0 && number >= game.getProblemSize()) {
+            if (number < 0 || number >= game.getProblemSize()) {
                 System.out.println("Proszę wpisać wartość od 0 do " + game.getProblemSize());
                 return getNumber(game);
             } else {

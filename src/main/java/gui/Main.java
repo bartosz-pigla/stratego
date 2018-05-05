@@ -1,6 +1,7 @@
 package gui;
 
 import algorithm.Algorithm;
+import algorithm.AlphaBeta;
 import algorithm.Human;
 import api.Game;
 import api.Player;
@@ -13,7 +14,7 @@ import selector.RandomSelector;
 final class Main {
 
     public static void main(String[] args) {
-        run(3);
+        run(5);
     }
 
     private static void run(int problemSize) {
@@ -24,14 +25,14 @@ final class Main {
 
         int level = 4;
 //        Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator, game);
-//        Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game);
+        Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game);
         Algorithm playerOneAlgorithm = new Human(gui, game, calculator);
-        Algorithm playerTwoAlgorithm = new Human(gui, game, calculator);
+        //Algorithm playerTwoAlgorithm = new Human(gui, game, calculator);
 
         Player playerOne = new Player("player1", playerOneAlgorithm);
         Player playerTwo = new Player("player2", playerTwoAlgorithm);
 
-        PlayerIterator iterator = new PlayerIterator(playerOne, playerTwo);
+        PlayerIterator iterator = new PlayerIterator(playerTwo, playerOne);
         Player currentPlayer;
 
         while (game.getEmptyPositions().size() > 0) {
