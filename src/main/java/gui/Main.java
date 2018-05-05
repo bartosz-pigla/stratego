@@ -14,7 +14,7 @@ import selector.RandomSelector;
 final class Main {
 
     public static void main(String[] args) {
-        run(5);
+        run(80);
     }
 
     private static void run(int problemSize) {
@@ -23,7 +23,7 @@ final class Main {
         PositionSelector selector = new RandomSelector(game);
         Gui gui = new Gui('*', 'o', problemSize);
 
-        int level = 4;
+        int level = 2;
 //        Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator, game);
         Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game);
         Algorithm playerOneAlgorithm = new Human(gui, game, calculator);
