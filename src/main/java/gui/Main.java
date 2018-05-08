@@ -2,7 +2,7 @@ package gui;
 
 import algorithm.Algorithm;
 import algorithm.AlphaBeta;
-import algorithm.Human;
+import algorithm.MinMax;
 import api.Game;
 import api.Player;
 import api.PlayerIterator;
@@ -14,7 +14,7 @@ import selector.RandomSelector;
 final class Main {
 
     public static void main(String[] args) {
-        run(80);
+        run(8);
     }
 
     private static void run(int problemSize) {
@@ -24,9 +24,10 @@ final class Main {
         Gui gui = new Gui('*', 'o', problemSize);
 
         int level = 2;
-//        Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator, game);
+        //Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator, game);
         Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game);
-        Algorithm playerOneAlgorithm = new Human(gui, game, calculator);
+        Algorithm playerOneAlgorithm = new MinMax(level, selector, calculator, game);
+        //Algorithm playerOneAlgorithm = new Human(gui, game, calculator);
         //Algorithm playerTwoAlgorithm = new Human(gui, game, calculator);
 
         Player playerOne = new Player("player1", playerOneAlgorithm);

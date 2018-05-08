@@ -9,7 +9,7 @@ import api.Position;
 import score.ScoreCalculator;
 import selector.PositionSelector;
 
-public final class AlphaBeta implements Algorithm {
+public final class MinMax implements Algorithm {
 
     private int depth;
     private PositionSelector selector;
@@ -17,7 +17,7 @@ public final class AlphaBeta implements Algorithm {
     private Game game;
     private List<Position> visitedPositions;
 
-    public AlphaBeta(int depth, PositionSelector selector, ScoreCalculator calculator, Game game) {
+    public MinMax(int depth, PositionSelector selector, ScoreCalculator calculator, Game game) {
         this.depth = depth;
         this.selector = selector;
         this.calculator = calculator;
@@ -28,12 +28,12 @@ public final class AlphaBeta implements Algorithm {
     @Override
     public int play(Player player) {
         clearVisitedPositions();
-        Position position = alphaBeta(null, Math.min(depth, game.getEmptyPositions().size()), true, Integer.MIN_VALUE, Integer.MAX_VALUE, visitedPositions);
+        Position position = minMax(null, Math.min(depth, game.getEmptyPositions().size()), true, visitedPositions);
         game.fillPosition(position.getPosX(), position.getPosY(), true);
         return position.getScore();
     }
 
-    private Position alphaBeta(Position position, int depth, boolean maximizingPlayer, int alpha, int beta, List<Position> visited) {
+    private Position minMax(Position position, int depth, boolean maximizingPlayer, List<Position> visited) {
         if (depth == 0) {
             for (Position pos : visited) {
                 pos.setFilled(true);
@@ -44,28 +44,24 @@ public final class AlphaBeta implements Algorithm {
             }
             return position;
         } else if (maximizingPlayer) {
-            return doForMaximizingPlayer(depth, alpha, beta, visited);
+            return doForMaximizingPlayer(depth, visited);
         } else {
-            return doForMinimizingPlayer(depth, alpha, beta, visited);
+            return doForMinimizingPlayer(depth, visited);
         }
     }
 
-    private Position doForMaximizingPlayer(int depth, int alpha, int beta, List<Position> visited) {
+    private Position doForMaximizingPlayer(int depth, List<Position> visited) {
         int bestScore = Integer.MIN_VALUE;
         Position bestPosition = null;
 
         for (Position currentPosition : game.getEmptyPositions()) {
             if (!visited.contains(currentPosition)) {
                 visited.set(depth - 1, currentPosition);
-                alphaBeta(currentPosition, depth - 1, false, alpha, beta, visited);
+                minMax(currentPosition, depth - 1, false, visited);
                 visited.set(depth - 1, null);
                 if (currentPosition.getScore() > bestScore) {
                     bestPosition = currentPosition;
                     bestScore = currentPosition.getScore();
-                    alpha = Math.max(alpha, bestScore);
-                    if (alpha >= beta) {
-                        break;
-                    }
                 }
             }
         }
@@ -73,22 +69,18 @@ public final class AlphaBeta implements Algorithm {
         return bestPosition;
     }
 
-    private Position doForMinimizingPlayer(int depth, int alpha, int beta, List<Position> visited) {
+    private Position doForMinimizingPlayer(int depth, List<Position> visited) {
         int worstScore = Integer.MAX_VALUE;
         Position worstPosition = null;
 
         for (Position currentPosition : game.getEmptyPositions()) {
             if (!visited.contains(currentPosition)) {
                 visited.set(depth - 1, currentPosition);
-                alphaBeta(currentPosition, depth - 1, true, alpha, beta, visited);
+                minMax(currentPosition, depth - 1, true, visited);
                 visited.set(depth - 1, null);
                 if (currentPosition.getScore() < worstScore) {
                     worstPosition = currentPosition;
                     worstScore = currentPosition.getScore();
-                    alpha = Math.min(alpha, worstScore);
-                    if (alpha >= beta) {
-                        break;
-                    }
                 }
             }
         }
