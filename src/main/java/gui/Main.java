@@ -6,8 +6,8 @@ import algorithm.MinMax;
 import api.Game;
 import api.Player;
 import api.PlayerIterator;
+import score.NegativeScoreCalculator;
 import score.ScoreCalculator;
-import score.SimpleScoreCalculator;
 import selector.PositionSelector;
 import selector.RandomSelector;
 
@@ -19,7 +19,7 @@ final class Main {
 
     private static void run(int problemSize) {
         Game game = new Game(problemSize);
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new NegativeScoreCalculator();
         PositionSelector selector = new RandomSelector(game);
         Gui gui = new Gui('*', 'o', problemSize);
 
@@ -33,7 +33,7 @@ final class Main {
         Player playerOne = new Player("player1", playerOneAlgorithm);
         Player playerTwo = new Player("player2", playerTwoAlgorithm);
 
-        PlayerIterator iterator = new PlayerIterator(playerTwo, playerOne);
+        PlayerIterator iterator = new PlayerIterator(playerOne, playerTwo);
         Player currentPlayer;
 
         while (game.getEmptyPositions().size() > 0) {

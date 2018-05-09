@@ -36,11 +36,13 @@ public final class MinMax implements Algorithm {
     private Position minMax(Position position, int depth, boolean maximizingPlayer, List<Position> visited) {
         if (depth == 0) {
             for (Position pos : visited) {
-                pos.setFilled(true);
+                if(pos!=null)
+                    pos.setFilled(true);
             }
             calculator.calculate(position);
             for (Position pos : visited) {
-                pos.setFilled(false);
+                if(pos!=null)
+                    pos.setFilled(false);
             }
             return position;
         } else if (maximizingPlayer) {
