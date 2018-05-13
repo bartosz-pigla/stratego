@@ -20,7 +20,7 @@ final class Main {
     private static void run(int problemSize) {
         Game game = new Game(problemSize);
         ScoreCalculator calculator = new NegativeScoreCalculator();
-        PositionSelector selector = new RandomSelector(game);
+        PositionSelector selector = new RandomSelector(game, 0.2);
         Gui gui = new Gui('*', 'o', problemSize);
 
         int level = 2;

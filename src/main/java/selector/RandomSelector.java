@@ -7,33 +7,44 @@ import java.util.Random;
 import api.Game;
 import api.Position;
 
-public final class RandomSelector implements PositionSelector {
+public final class RandomSelector extends PositionSelector {
 
-    private Game game;
     private Random random = new Random();
-    private List<Position> notVisited;
+
+    public RandomSelector(Game game, double rate) {
+        super(game, rate);
+    }
 
     public RandomSelector(Game game) {
-        this.game = game;
-        this.notVisited = new ArrayList<>(game.getProblemSize());
+        super(game, 1);
     }
 
     @Override
-    public Position nextPosition() {
-        //return notVisited.get(random.nextInt(emptyPositions.size()));
-        return null;
+    public List<Position> selectPositions(List<Position> visited) {
+        List<Position> positions = new ArrayList<>(poolSize);
+        Position currentPosition;
+        while (poolSize > positions.size()) {
+            currentPosition = selectPosition(visited);
+            if (currentPosition != null) {
+                positions.add(currentPosition);
+            } else {
+                break;
+            }
+        }
+        return positions;
     }
 
-    @Override
-    public boolean hasNext() {
-        return notVisited.size() > 0;
-    }
+    public Position selectPosition(List<Position> visited) {
+        if (game.getEmptyPositions().size() == 0 || game.getEmptyPositions().size() == visited.size()) {
+            return null;
+        }
 
-    @Override
-    public void init() {
-        this.notVisited.clear();
-        this.notVisited.addAll(game.getEmptyPositions());
-    }
+        Position randomizedPos;
+        do {
+            randomizedPos = game.getEmptyPositions().get(random.nextInt(game.getEmptyPositions().size()));
 
+        } while (visited.contains(randomizedPos));
+        return randomizedPos;
+    }
 
 }

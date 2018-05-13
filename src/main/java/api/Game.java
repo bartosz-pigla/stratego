@@ -1,8 +1,8 @@
 package api;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ public final class Game {
     private Position[][] gameMatrix;
     private int problemSize;
     private Random random = new Random();
-    private Set<Position> emptyPositions;
+    private List<Position> emptyPositions;
 
     private Position[][] columns;
     private Position[][] leftDiagonals;
@@ -20,7 +20,7 @@ public final class Game {
 
     public Game(int problemSize) {
         this.problemSize = problemSize;
-        this.emptyPositions = new HashSet<>(problemSize * problemSize);
+        this.emptyPositions = new ArrayList<>(problemSize * problemSize);
         initPositions();
         initColumns();
         initDiagonals();
