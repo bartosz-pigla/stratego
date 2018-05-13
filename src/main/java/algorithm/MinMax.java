@@ -6,11 +6,12 @@ import api.Game;
 import api.Position;
 import score.ScoreCalculator;
 import selector.PositionSelector;
+import sorter.PositionsSorter;
 
 public final class MinMax extends ComputerAlgorithm {
 
-    public MinMax(int depth, PositionSelector selector, ScoreCalculator calculator, Game game) {
-        super(depth, selector, calculator, game);
+    public MinMax(int depth, PositionSelector selector, ScoreCalculator calculator, Game game, PositionsSorter sorter) {
+        super(depth, selector, calculator, game, sorter);
     }
 
     @Override
@@ -38,7 +39,7 @@ public final class MinMax extends ComputerAlgorithm {
     private Position doForMaximizingPlayer(int depth, List<Position> visited) {
         int bestScore = Integer.MIN_VALUE;
         Position bestPosition = null;
-        List<Position> selectedPositions = selector.selectPositions(visited);
+        List<Position> selectedPositions = sorter.sort(selector.selectPositions(visited));
 
         for (Position currentPosition : selectedPositions) {
             visited.set(depth - 1, currentPosition);
@@ -61,7 +62,7 @@ public final class MinMax extends ComputerAlgorithm {
     private Position doForMinimizingPlayer(int depth, List<Position> visited) {
         int worstScore = Integer.MAX_VALUE;
         Position worstPosition = null;
-        List<Position> selectedPositions = selector.selectPositions(visited);
+        List<Position> selectedPositions = sorter.sort(selector.selectPositions(visited));
 
         for (Position currentPosition : selectedPositions) {
             visited.set(depth - 1, currentPosition);

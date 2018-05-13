@@ -10,11 +10,12 @@ import score.NegativeScoreCalculator;
 import score.ScoreCalculator;
 import selector.PositionSelector;
 import selector.RandomSelector;
+import sorter.DescendingSorter;
 
 final class Main {
 
     public static void main(String[] args) {
-        run(8);
+        run(15);
     }
 
     private static void run(int problemSize) {
@@ -25,10 +26,10 @@ final class Main {
 
         int level = 2;
         //Algorithm playerOneAlgorithm = new AlphaBeta(level, selector, calculator, game);
-        Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game);
-        Algorithm playerOneAlgorithm = new MinMax(level, selector, calculator, game);
-        //Algorithm playerOneAlgorithm = new Human(gui, game, calculator);
-        //Algorithm playerTwoAlgorithm = new Human(gui, game, calculator);
+        Algorithm playerTwoAlgorithm = new AlphaBeta(level, selector, calculator, game, new DescendingSorter(calculator));
+        Algorithm playerOneAlgorithm = new MinMax(level, selector, calculator, game, new DescendingSorter(calculator));
+        //Algorithm playerOneAlgorithm = new HumanAlgorithm(gui, game, calculator);
+        //Algorithm playerTwoAlgorithm = new HumanAlgorithm(gui, game, calculator);
 
         Player playerOne = new Player("player1", playerOneAlgorithm);
         Player playerTwo = new Player("player2", playerTwoAlgorithm);

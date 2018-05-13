@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import score.ScoreCalculator;
 
 @AllArgsConstructor
-public final class Human implements Algorithm {
+public final class HumanAlgorithm implements Algorithm {
 
     private Gui gui;
     private Game game;

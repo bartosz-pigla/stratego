@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import score.ScoreCalculator;
-import score.SimpleScoreCalculator;
+import score.DefaultScoreCalculator;
 
 public class ScoreTest {
 
@@ -22,7 +22,7 @@ public class ScoreTest {
         Position position = game.getPosition(2, 0);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 8);
@@ -42,7 +42,7 @@ public class ScoreTest {
         Position position = game.getPosition(3, 0);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 12);
@@ -62,7 +62,7 @@ public class ScoreTest {
         Position position = game.getPosition(0, 3);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 12);
@@ -83,7 +83,7 @@ public class ScoreTest {
         Position position = game.getPosition(2, 2);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 20);
@@ -103,7 +103,7 @@ public class ScoreTest {
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 0);
@@ -123,7 +123,7 @@ public class ScoreTest {
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 0);
@@ -143,7 +143,7 @@ public class ScoreTest {
         Position position = game.getPosition(1, 1);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 0);
@@ -163,7 +163,7 @@ public class ScoreTest {
         Position position = game.getPosition(1, 2);
         position.fillAndRemoveFromEmpties();
 
-        ScoreCalculator calculator = new SimpleScoreCalculator();
+        ScoreCalculator calculator = new DefaultScoreCalculator();
         calculator.calculate(position);
 
         assertEquals(position.getScore(), 0);

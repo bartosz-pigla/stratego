@@ -2,7 +2,7 @@ package score;
 
 import api.Position;
 
-public final class SimpleScoreCalculator implements ScoreCalculator {
+public final class DefaultScoreCalculator implements ScoreCalculator {
 
     @Override
     public void calculate(Position position) {

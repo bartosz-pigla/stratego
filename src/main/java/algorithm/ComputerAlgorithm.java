@@ -8,6 +8,7 @@ import api.Player;
 import api.Position;
 import score.ScoreCalculator;
 import selector.PositionSelector;
+import sorter.PositionsSorter;
 
 public abstract class ComputerAlgorithm implements Algorithm {
 
@@ -16,13 +17,15 @@ public abstract class ComputerAlgorithm implements Algorithm {
     protected ScoreCalculator calculator;
     protected Game game;
     protected List<Position> visitedPositions;
+    protected PositionsSorter sorter;
 
-    public ComputerAlgorithm(int depth, PositionSelector selector, ScoreCalculator calculator, Game game) {
+    public ComputerAlgorithm(int depth, PositionSelector selector, ScoreCalculator calculator, Game game, PositionsSorter sorter) {
         this.depth = depth;
         this.selector = selector;
         this.calculator = calculator;
         this.game = game;
         initVisitedPositions();
+        this.sorter = sorter;
     }
 
     @Override
