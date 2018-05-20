@@ -11,12 +11,12 @@ public final class RandomSelector extends PositionSelector {
 
     private Random random = new Random();
 
-    public RandomSelector(Game game, double rate) {
-        super(game, rate);
+    public RandomSelector(Game game, double rate, double rate2) {
+        super(game, rate, rate2);
     }
 
     public RandomSelector(Game game) {
-        super(game, 1);
+        super(game, 1, 1);
     }
 
     @Override

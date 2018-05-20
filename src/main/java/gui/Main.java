@@ -8,6 +8,7 @@ import api.Player;
 import api.PlayerIterator;
 import score.NegativeScoreCalculator;
 import score.ScoreCalculator;
+import selector.HeuristicSelector;
 import selector.PositionSelector;
 import selector.RandomSelector;
 import sorter.DescendingSorter;
@@ -21,7 +22,7 @@ final class Main {
     private static void run(int problemSize) {
         Game game = new Game(problemSize);
         ScoreCalculator calculator = new NegativeScoreCalculator();
-        PositionSelector selector = new RandomSelector(game, 0.2);
+        PositionSelector selector = new HeuristicSelector(new RandomSelector(game, 1, 1), game, 0.3, 0.8);
         Gui gui = new Gui('*', 'o', problemSize);
 
         int level = 2;

@@ -11,18 +11,23 @@ public final class HeuristicSelector extends PositionSelector {
     private RandomSelector randomSelector;
 
     public HeuristicSelector(RandomSelector randomSelector, Game game) {
-        super(game, 1);
+        super(game, 1, 1);
         this.randomSelector = randomSelector;
     }
 
-    public HeuristicSelector(RandomSelector randomSelector, Game game, double rate) {
-        super(game, rate);
+    public HeuristicSelector(RandomSelector randomSelector, Game game, double rate, double rate2) {
+        super(game, rate, rate2);
         this.randomSelector = randomSelector;
     }
 
     @Override
     public List<Position> selectPositions(List<Position> visited) {
         List<Position> positions = new ArrayList<>(poolSize);
+
+        if(game.getEmptyPositions().size()>=emptiesAllowed){
+            positions.add(randomSelector.selectPosition(visited));
+            return positions;
+        }
 
         Position positionFromRow;
         for (int row = 0; row < game.getProblemSize(); row++) {
@@ -89,6 +94,6 @@ public final class HeuristicSelector extends PositionSelector {
                 }
             }
         }
-        return game.getPosition(posX, posY);
+        return posX!=-1 && posY!=-1 ? game.getPosition(posX, posY) : null;
     }
 }
